@@ -30,4 +30,6 @@ else:
 
 pbp = PBP(events, team_1 = team_1, team_2=team_2)
 res = pbp()
-print(res)
+
+for elem in res:
+    print(elem)
