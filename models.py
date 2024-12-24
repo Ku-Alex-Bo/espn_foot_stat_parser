@@ -3,6 +3,7 @@ from typing import List, Tuple
 
 class Event(BaseModel):
   time: str
+  type: str
   team: str
   score: List[int]
   player: str
