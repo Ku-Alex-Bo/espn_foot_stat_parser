@@ -16,3 +16,8 @@ class Offside(Event):
 
 class Corner(Event):
   pass
+
+class Medical(BaseModel):
+  time: str
+  type: str
+  score: int
