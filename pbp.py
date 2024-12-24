@@ -10,6 +10,7 @@ class PBP:
 
     _corner_score = [0,0]
     _offside_score = [0,0]
+    _medical_score = 0
 
     _res_list = []
 
@@ -25,6 +26,9 @@ class PBP:
                 continue
             if "Corner, " in event[1]:
                 self.insert_corner(event)
+                continue
+            if "Delay in match because of an injury" in event[1]:
+                self.insert_medical(event)
                 continue
         return self._res_list
 
@@ -51,9 +55,7 @@ class PBP:
             "player": player_match.group().strip()
         }
 
-        self._res_list.append(
-            Offside(**offside)
-        )
+        self._res_list.append(Offside(**offside))
 
     #Функция добавления углового
     def insert_corner(self, event: tuple[str,str]) -> None:
@@ -75,6 +77,15 @@ class PBP:
             "player": player_match.group().strip()
         }
 
-        self._res_list.append(
-            Corner(**corner)
-        )
+        self._res_list.append(Corner(**corner))
+
+    #Функция добавления медицинской бригады
+    def insert_medical(self, event: tuple[str,str]) -> None:
+        self._medical_score +=1
+        medical = {
+            "time": event[0],
+            "type": "Мед.Бригада",
+            "score": self._medical_score
+        }
+
+        self._res_list.append(Medical(**medical))
